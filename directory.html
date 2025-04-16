@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Directory - Mountieville</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #eef2f7;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #004080;
+    }
+    nav a {
+      margin: 0 1rem;
+      color: #004080;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+    table {
+      margin: 2rem auto;
+      width: 90%;
+      max-width: 800px;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 1rem;
+      border: 1px solid #ccc;
+      font-size: 1.1rem;
+    }
+    th {
+      background-color: #004080;
+      color: white;
+    }
+    .download {
+      margin-top: 1rem;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      background-color: #004080;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .search-bar {
+      margin-bottom: 1rem;
+      padding: 0.8rem;
+      width: 80%;
+      max-width: 500px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Student Directory</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="assignments.html">Assignments</a>
+    <a href="announcements.html">Announcements</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="calendar.html">Calendar</a>
+    <a href="lunch.html">Lunch</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <input type="text" class="search-bar" id="search" placeholder="Search by name..." onkeyup="searchDirectory()">
+
+  <table id="directory">
+    <thead>
+      <tr><th>First Name</th><th>Last Name</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button class="download" onclick="downloadCSV()">Download Directory CSV</button>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const tbody = document.querySelector('#directory tbody');
+
+    function renderDirectory(filteredUsers) {
+      tbody.innerHTML = '';
+      filteredUsers.forEach(user => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${user.fname}</td><td>${user.lname}</td>`;
+        tbody.appendChild(row);
+      });
+    }
+
+    function searchDirectory() {
+      const searchQuery = document.getElementById('search').value.toLowerCase();
+      const filteredUsers = users.filter(user =>
+        user.fname.toLowerCase().includes(searchQuery) ||
+        user.lname.toLowerCase().includes(searchQuery)
+      );
+      renderDirectory(filteredUsers);
+    }
+
+    renderDirectory(users);
+
+    function downloadCSV() {
+      let csv = 'First Name,Last Name\n';
+      users.forEach(user => {
+        csv += `${user.fname},${user.lname}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'mountieville-directory.csv';
+      link.click();
+    }
+  </script>
+</body>
+</html>

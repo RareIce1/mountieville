@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Mountieville</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #eef2f7; text-align: center; padding: 2rem; }
+        h1 { color: #004080; font-size: 2.5rem; }
+        nav a { margin: 0 1rem; color: #004080; font-weight: bold; text-decoration: none; font-size: 1.2rem; }
+        .lunch-menu { margin-top: 2rem; font-size: 1.5rem; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Mountieville</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="assignments.html">Assignments</a>
+        <a href="announcements.html">Announcements</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="lunch.html">Lunch</a>
+        <a href="login.html">Login</a>
+    </nav>
+
+    <div class="lunch-menu">
+        <h2>Today's Lunch</h2>
+        <p id="lunch">Loading...</p>
+    </div>
+
+    <script>
+        const todayLunch = 'Pizza and Salad';  // Example lunch for today
+        document.getElementById('lunch').textContent = todayLunch;
+    </script>
+</body>
+</html>
